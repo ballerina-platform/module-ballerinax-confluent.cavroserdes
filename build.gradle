@@ -82,6 +82,7 @@ subprojects {
 task build {
     dependsOn(":confluent.cavroserdes-native:build")
     dependsOn(":confluent.cavroserdes-ballerina:build")
+    dependsOn(":confluent.cavroserdes-examples:build")
 }
 
 def moduleVersion = project.version.replace("-SNAPSHOT", "")

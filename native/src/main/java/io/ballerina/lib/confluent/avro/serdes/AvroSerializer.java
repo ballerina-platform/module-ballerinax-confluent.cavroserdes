@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com)
  *
  * WSO2 LLC. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -33,14 +33,17 @@ import java.nio.ByteBuffer;
 
 import static io.ballerina.lib.confluent.avro.serdes.ModuleUtils.getModule;
 
+/**
+ * Provide APIs related to Avro Serialization/Deserialization with the Schema Registry.
+ */
 public class AvroSerializer {
-    private static final String FUNCTION = "deserializeData";
+    private static final String DESERIALIZE_FUNCTION = "deserializeData";
 
     public static final StrandMetadata EXECUTION_STRAND = new StrandMetadata(
             getModule().getOrg(),
             getModule().getName(),
             getModule().getMajorVersion(),
-            FUNCTION);
+            DESERIALIZE_FUNCTION);
 
     public static Object deserialize(Environment env, BObject kafkaSerDes, BArray data,
                                      BTypedesc typeDesc) {
@@ -50,7 +53,7 @@ public class AvroSerializer {
         UnionType typeUnion = TypeCreator.createUnionType(PredefinedTypes.TYPE_ANYDATA_ARRAY,
                                                           PredefinedTypes.TYPE_ERROR);
         env.getRuntime()
-                .invokeMethodAsyncConcurrently(kafkaSerDes, FUNCTION, null, EXECUTION_STRAND,
+                .invokeMethodAsyncConcurrently(kafkaSerDes, DESERIALIZE_FUNCTION, null, EXECUTION_STRAND,
                                                executionCallback, null, typeUnion, arguments);
         return null;
     }

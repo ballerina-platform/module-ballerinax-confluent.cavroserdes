@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com)
  *
  * WSO2 LLC. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -26,6 +26,9 @@ import io.ballerina.runtime.api.utils.ValueUtils;
 import io.ballerina.runtime.api.values.BError;
 import io.ballerina.runtime.api.values.BTypedesc;
 
+/**
+ * Callback class for executing Ballerina Avro Deserialization methods.
+ */
 public class ExecutionCallback implements Callback {
     private final Future future;
     private final BTypedesc typeDesc;
@@ -34,6 +37,7 @@ public class ExecutionCallback implements Callback {
         this.future = future;
         this.typeDesc = typeDesc;
     }
+
     @Override
     public void notifySuccess(Object o) {
         Object jsonObject = JsonUtils.parse(StringUtils.getJsonString(o));

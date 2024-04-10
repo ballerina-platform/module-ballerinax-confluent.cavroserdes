@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2024, WSO2 LLC. (http://www.wso2.com)
  *
  * WSO2 LLC. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -21,6 +21,10 @@ package io.ballerina.lib.confluent.avro.serdes;
 import io.ballerina.runtime.api.Environment;
 import io.ballerina.runtime.api.Module;
 
+/**
+ * This class includes the utility functions related to Ballerina Avro Serializer for Schema Registry module.
+ *
+ */
 public class ModuleUtils {
     private static Module module;
 

@@ -39,7 +39,7 @@ public isolated client class Client {
     remote isolated function serialize(string schema, anydata data, string subject) returns byte[]|Error {
         do {
             int id = check self.schemaClient->register(subject, schema);
-            byte[] encodedId = check self.toBytes(id);
+            byte[] encodedId = check toBytes(id);
             avro:Schema avroClient = check new (schema);
             byte[] serializedData = check avroClient.toAvro(data);
             return [...encodedId, ...serializedData];
@@ -59,17 +59,9 @@ public isolated client class Client {
         'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
     } external;
 
-    isolated function toBytes(int id) returns byte[]|error = @java:Method {
-        'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
-    } external;
-
-    isolated function getId(byte[] bytes) returns int = @java:Method {
-        'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
-    } external;
-
     isolated function deserializeData(byte[] data) returns anydata|Error {
         do {
-            int schemaId = self.getId(data.slice(1, 5));
+            int schemaId = getId(data.slice(1, 5));
             string retrievedSchema = check self.schemaClient->getSchemaById(schemaId);
             avro:Schema avroClient = check new (retrievedSchema);
             anydata deserializedData = check avroClient.fromAvro(data.slice(5, data.length()));
@@ -79,3 +71,11 @@ public isolated client class Client {
         }
     }
 }
+
+isolated function toBytes(int id) returns byte[]|error = @java:Method {
+    'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
+} external;
+
+isolated function getId(byte[] bytes) returns int = @java:Method {
+    'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
+} external;

@@ -23,7 +23,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "avro"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]
@@ -359,7 +359,7 @@ modules = [
 [[package]]
 org = "ballerinax"
 name = "confluent.cregistry"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]

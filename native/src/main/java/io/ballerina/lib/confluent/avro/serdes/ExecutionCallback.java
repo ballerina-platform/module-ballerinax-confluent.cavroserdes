@@ -39,12 +39,12 @@ public class ExecutionCallback implements Callback {
     }
 
     @Override
-    public void notifySuccess(Object o) {
-        try {
-            Object jsonObject = JsonUtils.parse(StringUtils.getJsonString(o));
+    public void notifySuccess(Object result) {
+        if (result instanceof BError) {
+            this.future.complete(result);
+        } else {
+            Object jsonObject = JsonUtils.parse(StringUtils.getJsonString(result));
             this.future.complete(ValueUtils.convert(jsonObject, typeDesc.getDescribingType()));
-        } catch (BError e) {
-            this.future.complete(e);
         }
     }
 

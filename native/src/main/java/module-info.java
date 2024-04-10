@@ -16,7 +16,7 @@
  * under the License.
  */
 
-module io.ballerina.stdlib.serdes {
+module io.ballerina.lib.serdes {
     requires io.ballerina.runtime;
     requires io.ballerina.lang;
     requires org.apache.avro;

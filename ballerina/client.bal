@@ -57,10 +57,10 @@ public isolated client class Client {
 
     public isolated function deserializeData(byte[] data) returns anydata|Error {
         do {
-            int schemaId = self.getId(data.slice(0, 4));
+            int schemaId = self.getId(data.slice(1, 5));
             string retrievedSchema = check self.schemaClient->getSchemaById(schemaId);
             avro:Schema avroClient = check new (retrievedSchema);
-            anydata deserializedData = check avroClient.fromAvro(data.slice(4, data.length()));
+            anydata deserializedData = check avroClient.fromAvro(data.slice(5, data.length()));
             return deserializedData;
         } on fail error e {
             return error Error(DESERIALIZATION_ERROR, e);

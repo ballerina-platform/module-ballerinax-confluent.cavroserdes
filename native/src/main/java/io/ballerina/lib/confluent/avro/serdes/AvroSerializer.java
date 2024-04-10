@@ -56,7 +56,7 @@ public class AvroSerializer {
     }
 
     public static BArray toBytes(int id) {
-        byte[] value = ByteBuffer.allocate(4).putInt(id).array();
+        byte[] value = ByteBuffer.allocate(5).put((byte) 0).putInt(id).array();
         return ValueCreator.createArrayValue(value);
     }
 

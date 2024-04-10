@@ -30,9 +30,15 @@ public isolated client class Client {
         self.schemaClient = schemaClient;
     }
 
-    remote isolated function serialize(string schema, anydata data, string topic) returns byte[]|Error {
+    # Serializes the given data according to the Avro format and registers the schema into the schema registry.
+    #
+    # + schema - The Avro schema
+    # + data - The data to be serialized according to the schema
+    # + subject - The subject under which the schema should be registered
+    # + return - A `byte` array of the serialized data or else an `cavroserdes:Error`
+    remote isolated function serialize(string schema, anydata data, string subject) returns byte[]|Error {
         do {
-            int id = check self.schemaClient->register(topic, schema);
+            int id = check self.schemaClient->register(subject, schema);
             byte[] encodedId = check self.toBytes(id);
             avro:Schema avroClient = check new (schema);
             byte[] serializedData = check avroClient.toAvro(data);
@@ -42,8 +48,14 @@ public isolated client class Client {
         }
     }
 
-    remote isolated function deserialize(byte[] data, typedesc<anydata> T = <>)
-        returns T|Error = @java:Method {
+    # Deserializes the given Avro serialized message to the given data type by retrieving the schema 
+    # from the schema registry.
+    #
+    # + data - Avro serialized data which includes the schema id
+    # + targetType - Default parameter use to infer the user specified type
+    # + return - A deserialized data with the given type or else an `cavroserdes:Error`
+    remote isolated function deserialize(byte[] data, typedesc<anydata> targetType = <>)
+        returns targetType|Error = @java:Method {
         'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
     } external;
 
@@ -55,7 +67,7 @@ public isolated client class Client {
         'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
     } external;
 
-    public isolated function deserializeData(byte[] data) returns anydata|Error {
+    private isolated function deserializeData(byte[] data) returns anydata|Error {
         do {
             int schemaId = self.getId(data.slice(1, 5));
             string retrievedSchema = check self.schemaClient->getSchemaById(schemaId);

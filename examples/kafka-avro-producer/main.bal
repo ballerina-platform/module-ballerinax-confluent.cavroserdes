@@ -16,6 +16,7 @@
 
 import ballerina/http;
 import ballerinax/confluent.cavroserdes;
+import ballerinax/confluent.cregistry;
 import ballerinax/kafka;
 
 configurable string baseUrl = ?;
@@ -29,7 +30,7 @@ type Order readonly & record {
 
 service / on new http:Listener(9090) {
     private final kafka:Producer orderProducer;
-    private final cavroserdes:Client registry;
+    private final cregistry:Client registry;
 
     function init() returns error? {
         self.orderProducer = check new (kafka:DEFAULT_URL);
@@ -51,7 +52,8 @@ service / on new http:Listener(9090) {
                     {"name": "productName", "type": "string"}
                 ]
             }`;
-        byte[] byteValue = check self.registry->serialize(schema, newOrder, "new-subject");
+        cavroserdes:Client avroSerDes = new;
+        byte[] byteValue = check avroSerDes->serialize(self.registry, schema, newOrder, "new-subject");
         check self.orderProducer->send({
             topic: "test-topic",
             value: byteValue

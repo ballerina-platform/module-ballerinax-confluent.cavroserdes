@@ -16,6 +16,7 @@
 
 import ballerina/io;
 import ballerinax/confluent.cavroserdes;
+import ballerinax/confluent.cregistry;
 import ballerinax/kafka;
 
 type Order readonly & record {
@@ -34,17 +35,17 @@ public function main() returns error? {
         topics: "test-topic"
     });
 
-    cavroserdes:Client registry = check new ({
+    cregistry:Client registry = check new ({
         baseUrl,
         identityMapCapacity,
         originals,
         headers
     });
 
+    cavroserdes:Client avroSerDes = new;
     while true {
-        kafka:AnydataConsumerRecord[] getValues = check orderConsumer->poll(60);
-        byte[] orderData = <byte[]>getValues[0].value;
-        Order getOrder = check registry->deserialize(orderData);
+        byte[][] getValues = check orderConsumer->pollPayload(60);
+        Order getOrder = check avroSerDes->deserialize(registry, getValues[0]);
         io:println("Order : ", getOrder);
     }
 }

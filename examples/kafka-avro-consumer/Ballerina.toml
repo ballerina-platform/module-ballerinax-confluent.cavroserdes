@@ -1,6 +1,6 @@
 [package]
 org = "wso2"
-name = "kafka_avro_serdes_test"
+name = "kafka_avro_consumer"
 version = "0.1.0"
 distribution = "2201.8.6"
 

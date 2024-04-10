@@ -45,11 +45,11 @@ public class AvroSerializer {
             getModule().getMajorVersion(),
             DESERIALIZE_FUNCTION);
 
-    public static Object deserialize(Environment env, BObject kafkaSerDes, BArray data,
+    public static Object deserialize(Environment env, BObject kafkaSerDes, BObject registry, BArray data,
                                      BTypedesc typeDesc) {
         Future future = env.markAsync();
         ExecutionCallback executionCallback = new ExecutionCallback(future, typeDesc);
-        Object[] arguments = new Object[]{data, true};
+        Object[] arguments = new Object[]{registry, true, data, true};
         UnionType typeUnion = TypeCreator.createUnionType(PredefinedTypes.TYPE_ANYDATA_ARRAY,
                                                           PredefinedTypes.TYPE_ERROR);
         env.getRuntime()

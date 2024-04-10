@@ -5,7 +5,7 @@ version = "0.1.0"
 authors = ["Ballerina"]
 export=["confluent.cavroserdes"]
 keywords = ["confluent", "schema_registry", "avro", "serdes"]
-repository = "https://github.com/ballerina-platform/module-ballerinax-confluent.cregistry"
+repository = "https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes"
 license = ["Apache-2.0"]
 distribution = "2201.8.6"
 

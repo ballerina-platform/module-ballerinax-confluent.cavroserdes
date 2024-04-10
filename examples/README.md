@@ -6,7 +6,7 @@ The Ballerina Avro Serializer/Deserializer connector for Confluent Schema Regist
     This example shows how to publish Avro serialized data to a Kafka topic.
 
 2. [Kafka Avro consumer](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples/kafka-avro-consumer)
-    This example shows how to consume data in the correct format from a Kafka topic.
+    This guide demonstrates how to consume data in the correct format according to Avro schema from a Kafka topic.
 
 ## Prerequisites
 

@@ -6,15 +6,15 @@ This guide demonstrates how to consume data in the correct format according to A
 
 ### Configuration
 
-Configure the followings in Config.toml in the example directory.
+Configure the followings in `Config.toml` in the directory.
 
 ```toml
-baseUrl = <BASE_URL>
+baseUrl = "<BASE_URL>"
 identityMapCapacity = <SCHEMA_MAP_CAPACITY>
-subject = <SCHEMA_REGISTRY_TOPIC>
+subject = "<SCHEMA_REGISTRY_TOPIC>"
 
 [originals]
-"schema.registry.url" = <SCHEMA_REGISTRY_ENDPOINT_URL>
+"schema.registry.url" = "<SCHEMA_REGISTRY_ENDPOINT_URL>"
 "basic.auth.credentials.source" = "USER_INFO"
 "bootstrap.servers" = "<SERVER>:<PORT>"
 "schema.registry.basic.auth.user.info" = "<KEY>:<SECRET>"

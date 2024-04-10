@@ -13,12 +13,12 @@ The Ballerina Avro Serializer/Deserializer connector for Confluent Schema Regist
 Create a `Config.toml` file with the base URL, schema capacity, subject, connection configurations and header values. Here's an example of how your `Config.toml` file should look:
 
     ```toml
-    baseUrl = <BASE_URL>
+    baseUrl = "<BASE_URL>"
     identityMapCapacity = <SCHEMA_MAP_CAPACITY>
-    subject = <SCHEMA_REGISTRY_TOPIC>
+    subject = "<SCHEMA_REGISTRY_TOPIC>"
 
     [originals]
-    "schema.registry.url" = <SCHEMA_REGISTRY_ENDPOINT_URL>
+    "schema.registry.url" = "<SCHEMA_REGISTRY_ENDPOINT_URL>"
     "basic.auth.credentials.source" = "USER_INFO"
     "bootstrap.servers" = "<SERVER>:<PORT>"
     "schema.registry.basic.auth.user.info" = "<KEY>:<SECRET>"

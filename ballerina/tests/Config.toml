@@ -1,0 +1,6 @@
+baseUrl = "http://localhost:9092/registry"
+identityMapCapacity = 1000
+
+[originals]
+
+[headers]

@@ -58,3 +58,13 @@ Use the following command to compile and run the Ballerina program.
 ```bash
 bal run
 ```
+
+## Examples
+
+The Ballerina Avro Serializer/Deserializer connector for Confluent Schema Registry provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples).
+
+1. [Kafka Avro producer](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples/kafka-avro-producer)
+    This example shows how to publish Avro serialized data to a Kafka topic.
+
+2. [Kafka Avro consumer](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples/kafka-avro-consumer)
+    This guide demonstrates how to consume data in the correct format according to Avro schema from a Kafka topic.

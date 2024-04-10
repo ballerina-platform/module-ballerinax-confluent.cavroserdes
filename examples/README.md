@@ -28,20 +28,7 @@ Create a `Config.toml` file with the base URL, schema capacity, subject, connect
 
 ## Running an Example
 
-Execute the following commands to build an example from the source:
-
-* To build an example:
-
-    ```bash
-    bal build
-    ```
-
-* To run an example:
-
-    ```bash
-    bal run
-    ```
-
+Follow these steps to run the examples.
 
 ## Step 01: Start a Kafka Server
 

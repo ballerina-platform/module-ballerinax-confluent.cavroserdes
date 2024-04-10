@@ -46,6 +46,12 @@ for dir in $(find "$BAL_EXAMPLES_DIR" -type d -maxdepth 1  -mindepth 1); do
   if [[ "$dir" == *build ]]; then
     continue
   fi
+  if [[ "$dir" == *configs ]]; then
+    continue
+  fi
+  if [[ "$dir" == *secrets ]]; then
+    continue
+  fi
   (cd "$dir" && bal "$BAL_CMD" --offline && cd ..); 
 done
 

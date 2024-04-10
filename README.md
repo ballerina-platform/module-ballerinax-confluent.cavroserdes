@@ -26,25 +26,17 @@ import ballerinax/confluent.cavroserdes;
 ### Step 2: Instantiate a new connector
 
 ```ballerina
-configurable string baseUrl = ?;
-configurable int identityMapCapacity = ?;
-configurable map<anydata> originals = ?;
-configurable map<string> headers = ?;
-
-cavroserdes:Client avroSerDes = check new ({
-    baseUrl,
-    identityMapCapacity,
-    originals,
-    headers
-});
+cavroserdes:Client avroSerDes = new;
 ```
 
 ### Step 3: Invoke the connector operation
 
-You can now utilize the operations available within the connector.
+You can now utilize the operations available within the connector. To instantiate a `cregistry:Client` instance refer to the guidelines [here](https://central.ballerina.io/ballerinax/confluent.cregistry/latest).
 
 ```ballerina
 public function main() returns error? {
+   cregistry:Client registry = ; // instantiate a schema registry client
+
    string schema = string `
       {
          "type": "int",
@@ -53,8 +45,8 @@ public function main() returns error? {
       }`;
 
    int value = 1;
-   byte[] bytes = check avroSerDes->serialize(schema, value, "subject");
-   int number = check avroSerDes->deserialize(bytes);
+   byte[] bytes = check avroSerDes->serialize(registry, schema, value, "subject");
+   int number = check avroSerDes->deserialize(registry, bytes);
 }
 ```
 
@@ -70,11 +62,9 @@ bal run
 
 The Ballerina Avro Serializer/Deserializer connector for Confluent Schema Registry provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples).
 
-1. [Kafka Avro producer](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples/kafka-avro-producer)
-    This example shows how to publish Avro serialized data to a Kafka topic.
+1. [Kafka Avro producer](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples/kafka-avro-producer) - This example demonstrates how to publish Avro serialized data to a Kafka topic.
 
-2. [Kafka Avro consumer](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples/kafka-avro-consumer)
-    This guide demonstrates how to consume data in the correct format according to Avro schema from a Kafka topic.
+2. [Kafka Avro consumer](https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes/tree/main/examples/kafka-avro-consumer) - This guide demonstrates how to consume data in the correct format according to the Avro schema from a Kafka topic.
 
 ## Issues and projects
 

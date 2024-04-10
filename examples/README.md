@@ -35,7 +35,7 @@ Follow these steps to run the examples.
 Execute the following docker command to start the Kafka server.
 
 ```bash
-sudo docker-compose -f docker-compose.yaml up -d
+docker-compose -f docker-compose.yaml up -d
 ```
 
 ## Step 02: Start the Kafka Producer

@@ -53,8 +53,8 @@ public function main() returns error? {
       }`;
 
    int value = 1;
-   byte[] bytes = check avroSerDes.serialize(schema, value, "subject");
-   int number = check avroSerDesClient.deserialize(bytes);
+   byte[] bytes = check avroSerDes->serialize(schema, value, "subject");
+   int number = check avroSerDes->deserialize(bytes);
 }
 ```
 
@@ -154,6 +154,7 @@ All contributors are encouraged to read the [Ballerina Code of Conduct](https://
 
 ## Useful links
 
+- For more information go to the [confluent.cavroderdes](https://central.ballerina.io/ballerinax/confluent.cavroserdes/latest) library.
 - Discuss code changes of the Ballerina project in [ballerina-dev@googlegroups.com](mailto:ballerina-dev@googlegroups.com).
 - Chat live with us via our [Discord server](https://discord.gg/ballerinalang).
 - Post all technical questions on Stack Overflow with the [#ballerina](https://stackoverflow.com/questions/tagged/ballerina) tag.

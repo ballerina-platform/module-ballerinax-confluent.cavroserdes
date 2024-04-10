@@ -59,15 +59,15 @@ public isolated client class Client {
         'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
     } external;
 
-    private isolated function toBytes(int id) returns byte[]|error = @java:Method {
+    isolated function toBytes(int id) returns byte[]|error = @java:Method {
         'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
     } external;
 
-    private isolated function getId(byte[] bytes) returns int = @java:Method {
+    isolated function getId(byte[] bytes) returns int = @java:Method {
         'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
     } external;
 
-    private isolated function deserializeData(byte[] data) returns anydata|Error {
+    isolated function deserializeData(byte[] data) returns anydata|Error {
         do {
             int schemaId = self.getId(data.slice(1, 5));
             string retrievedSchema = check self.schemaClient->getSchemaById(schemaId);

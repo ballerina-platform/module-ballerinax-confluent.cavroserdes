@@ -46,7 +46,15 @@ public function main() returns error? {
       }`;
 
    int value = 1;
-   byte[] bytes = check avroSerDes.serialize(schema, value, "subject");
-   int number = check avroSerDesClient.deserialize(bytes);
+   byte[] bytes = check avroSerDes->serialize(schema, value, "subject");
+   int number = check avroSerDes->deserialize(bytes);
 }
+```
+
+### Step 4: Run the Ballerina application
+
+Use the following command to compile and run the Ballerina program.
+
+```bash
+bal run
 ```

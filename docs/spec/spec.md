@@ -3,7 +3,7 @@
 _Authors_: @Nuvindu \
 _Reviewers_: @ThisaruGuruge \
 _Created_: 2024/04/10 \
-_Updated_: 2024/04/10 \
+_Updated_: 2024/04/11 \
 _Edition_: Swan Lake
 
 ## Introduction
@@ -19,13 +19,11 @@ The conforming implementation of the specification is released and included in t
 ## Contents
 
 1. [Overview](#1-overview)
-2. [Initialize the Avro Serializer/Deserializer client](#2-initialize-the-avro-serializerdeserializer-client)
-    * 2.1 [The `init` method](#21-the-init-method)
-3. [Serialize data](#3-serialize-data)
-    * 3.1 [The `serialize` API](#31-the-serialize-api)
-4. [Deserialize data](#4-deserialize-data)
-    * 4.1 [The `deserialize` API](#41-the-deserialize-api)
-5. [The `cavroserdes:Error` Type](#5-the-cavroserdeserror-type)
+2. [Serialize data](#3-serialize-data)
+    * 2.1 [The `serialize` API](#31-the-serialize-api)
+3. [Deserialize data](#4-deserialize-data)
+    * 3.1 [The `deserialize` API](#41-the-deserialize-api)
+4. [The `cavroserdes:Error` Type](#5-the-cavroserdeserror-type)
 
 ## 1. Overview
 
@@ -34,29 +32,7 @@ This specification provides a detailed explanation of the functionalities offere
 1. Serialize data
 2. Deserialize data
 
-## 2. Initialize the Avro Serializer/Deserializer client
-
-The Avro Serializer/Deserializer client needs to be initialized before performing the functionalities.
-
-### 2.1 The `init` method
-
-The `init` method initializes the Avro Serializer/Deserializer client. It takes a `config` parameter, which contains the necessary configuration to connect to the Schema Registry. The method returns an error if the initialization fails.
-
-```ballerina
-configurable string baseUrl = ?;
-configurable int identityMapCapacity = ?;
-configurable map<anydata> originals = ?;
-configurable map<string> headers = ?;
-
-cavroserdes:Client avroSerDes = check new ({
-    baseUrl,
-    identityMapCapacity,
-    originals,
-    headers
-});
-```
-
-## 3. Serialize data
+## 2. Serialize data
 
 The Avro Serializer/Deserializer module allows serializing data to Avro format using the schemas from the registry.
 
@@ -73,7 +49,8 @@ string schema = string `
 }`;
 
 int value = 1;
-byte[] bytes = check avroSerDes.serialize(schema, value, "subject");
+cregistry:Client registry = ; //instantiates a schema registry client
+byte[] bytes = check cavroserdes:serialize(registry, schema, value, "subject");
 ```
 
 ## 4. Deserialize data
@@ -85,7 +62,7 @@ This section details the process of deserializing Avro data using the schemas fr
 The `deserialize` method deserializes a given Avro data to its original form using the schema from the registry.
 
 ```ballerina
-int number = check avroSerDes.deserialize(bytes);
+int number = check cavroserdes:deserialize(registry, bytes);
 ```
 
 ## 5. The `cavroserdes:Error` Type

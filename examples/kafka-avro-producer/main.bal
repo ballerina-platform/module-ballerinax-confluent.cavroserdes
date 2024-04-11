@@ -52,8 +52,8 @@ service / on new http:Listener(9090) {
                     {"name": "productName", "type": "string"}
                 ]
             }`;
-        cavroserdes:Client avroSerDes = new;
-        byte[] byteValue = check avroSerDes->serialize(self.registry, schema, newOrder, "new-subject");
+
+        byte[] byteValue = check cavroserdes:serialize(self.registry, schema, newOrder, "new-subject");
         check self.orderProducer->send({
             topic: "test-topic",
             value: byteValue

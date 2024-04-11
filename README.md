@@ -23,13 +23,7 @@ Import the `ballerinax/confluent.cavroserdes` module into your Ballerina project
 import ballerinax/confluent.cavroserdes;
 ```
 
-### Step 2: Instantiate a new connector
-
-```ballerina
-cavroserdes:Client avroSerDes = new;
-```
-
-### Step 3: Invoke the connector operation
+### Step 2: Invoke the connector operation
 
 You can now utilize the operations available within the connector. To instantiate a `cregistry:Client` instance refer to the guidelines [here](https://central.ballerina.io/ballerinax/confluent.cregistry/latest).
 
@@ -45,12 +39,12 @@ public function main() returns error? {
       }`;
 
    int value = 1;
-   byte[] bytes = check avroSerDes->serialize(registry, schema, value, "subject");
-   int number = check avroSerDes->deserialize(registry, bytes);
+   byte[] bytes = check cavroserdes:serialize(registry, schema, value, "subject");
+   int number = check cavroserdes:deserialize(registry, bytes);
 }
 ```
 
-### Step 4: Run the Ballerina application
+### Step 3: Run the Ballerina application
 
 Use the following command to compile and run the Ballerina program.
 

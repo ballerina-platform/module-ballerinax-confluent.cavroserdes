@@ -42,10 +42,9 @@ public function main() returns error? {
         headers
     });
 
-    cavroserdes:Client avroSerDes = new;
     while true {
         byte[][] getValues = check orderConsumer->pollPayload(60);
-        Order getOrder = check avroSerDes->deserialize(registry, getValues[0]);
+        Order getOrder = check cavroserdes:deserialize(registry, getValues[0]);
         io:println("Order : ", getOrder);
     }
 }

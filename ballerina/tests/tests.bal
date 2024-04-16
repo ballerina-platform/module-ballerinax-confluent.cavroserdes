@@ -15,13 +15,14 @@
 // under the License.
 
 import ballerina/test;
+import ballerinax/confluent.cregistry;
 
 configurable string baseUrl = ?;
 configurable int identityMapCapacity = ?;
 configurable map<anydata> originals = ?;
 configurable map<string> headers = ?;
 
-Client avroSerDes = check new ({
+cregistry:Client regsitry = check new ({
     baseUrl,
     identityMapCapacity,
     originals,
@@ -45,9 +46,8 @@ public function testSerDes() returns error? {
         name: "Red",
         colors: ["maroon", "dark red", "light red"]
     };
-
-    byte[] bytes = check avroSerDes->serialize(schema, colors, "subject-0");
-    Color getColors = check avroSerDes->deserialize(bytes);
+    byte[] bytes = check serialize(regsitry, schema, colors, "subject-0");
+    Color getColors = check deserialize(regsitry, bytes);
     test:assertEquals(getColors, colors);
 }
 
@@ -69,8 +69,8 @@ public function testWithRecords() returns error? {
         subject: "Math"
     };
 
-    byte[] bytes = check avroSerDes->serialize(schema, student, "subject-1");
-    Student getStudent = check avroSerDes->deserialize(bytes);
+    byte[] bytes = check serialize(regsitry, schema, student, "subject-1");
+    Student getStudent = check deserialize(regsitry, bytes);
     test:assertEquals(getStudent, student);
 }
 
@@ -85,8 +85,8 @@ public function testSerDesWithInteger() returns error? {
 
     int value = 1;
 
-    byte[] bytes = check avroSerDes->serialize(schema, value, "subject-5");
-    int getValue = check avroSerDes->deserialize(bytes);
+    byte[] bytes = check serialize(regsitry, schema, value, "subject-5");
+    int getValue = check deserialize(regsitry, bytes);
     test:assertEquals(getValue, value);
 }
 
@@ -108,8 +108,8 @@ public function testSerDesWithCourse() returns error? {
         credits: 3
     };
 
-    byte[] bytes = check avroSerDes->serialize(schema, course, "subject-3");
-    Course getCourse = check avroSerDes->deserialize(bytes);
+    byte[] bytes = check serialize(regsitry, schema, course, "subject-3");
+    Course getCourse = check deserialize(regsitry, bytes);
     test:assertEquals(getCourse, course);
 }
 

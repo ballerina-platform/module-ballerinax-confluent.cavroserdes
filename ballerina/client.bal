@@ -18,51 +18,51 @@ import ballerina/avro;
 import ballerina/jballerina.java;
 import ballerinax/confluent.cregistry;
 
-# Consists of APIs to integrate with Avro Serializer/Deserializer for Confluent Schema Registry.
-public isolated client class Client {
-    private final cregistry:Client schemaClient;
-
-    public isolated function init(*cregistry:ConnectionConfig config) returns Error? {
-        cregistry:Client|error schemaClient = new (config);
-        if schemaClient is error {
-            return error Error("Client invocation error", schemaClient);
-        }
-        self.schemaClient = schemaClient;
+# Serializes the given data according to the Avro format and registers the schema into the schema registry.
+#
+# + registry - The schema registry client
+# + schema - The Avro schema
+# + data - The data to be serialized according to the schema
+# + subject - The subject under which the schema should be registered
+# + return - A `byte` array of the serialized data or else an `cavroserdes:Error`
+public isolated function serialize(cregistry:Client registry, string schema, anydata data,
+                                    string subject) returns byte[]|Error {
+    do {
+        int id = check registry->register(subject, schema);
+        byte[] encodedId = check toBytes(id);
+        avro:Schema avroClient = check new (schema);
+        byte[] serializedData = check avroClient.toAvro(data);
+        return [...encodedId, ...serializedData];
+    } on fail error e {
+        return error Error(SERIALIZATION_ERROR, e);
     }
+}
 
-    # Serializes the given data according to the Avro format and registers the schema into the schema registry.
-    #
-    # + schema - The Avro schema
-    # + data - The data to be serialized according to the schema
-    # + subject - The subject under which the schema should be registered
-    # + return - A `byte` array of the serialized data or else an `cavroserdes:Error`
-    remote isolated function serialize(string schema, anydata data, string subject) returns byte[]|Error {
-        do {
-            int id = check self.schemaClient->register(subject, schema);
-            byte[] encodedId = check toBytes(id);
-            avro:Schema avroClient = check new (schema);
-            byte[] serializedData = check avroClient.toAvro(data);
-            return [...encodedId, ...serializedData];
-        } on fail error e {
-            return error Error(SERIALIZATION_ERROR, e);
-        }
-    }
+# Deserializes the given Avro serialized message to the given data type by retrieving the schema 
+# from the schema registry.
+#
+# + registry - The schema registry client
+# + data - Avro serialized data which includes the schema id
+# + targetType - Default parameter use to infer the user specified type
+# + return - A deserialized data with the given type or else an `cavroserdes:Error`
+public isolated function deserialize(cregistry:Client registry, byte[] data, typedesc<anydata> targetType = <>)
+    returns targetType|Error = @java:Method {
+    'class: "io.ballerina.lib.confluent.avro.serdes.AvroDeserializer"
+} external;
 
-    # Deserializes the given Avro serialized message to the given data type by retrieving the schema 
-    # from the schema registry.
-    #
-    # + data - Avro serialized data which includes the schema id
-    # + targetType - Default parameter use to infer the user specified type
-    # + return - A deserialized data with the given type or else an `cavroserdes:Error`
-    remote isolated function deserialize(byte[] data, typedesc<anydata> targetType = <>)
-        returns targetType|Error = @java:Method {
-        'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
-    } external;
+isolated function toBytes(int id) returns byte[]|error = @java:Method {
+    'class: "io.ballerina.lib.confluent.avro.serdes.AvroDeserializer"
+} external;
 
-    isolated function deserializeData(byte[] data) returns anydata|Error {
+isolated function getId(byte[] bytes) returns int = @java:Method {
+    'class: "io.ballerina.lib.confluent.avro.serdes.AvroDeserializer"
+} external;
+
+class Deserializer {
+    isolated function deserializeData(cregistry:Client registry, byte[] data) returns anydata|Error {
         do {
             int schemaId = getId(data.slice(1, 5));
-            string retrievedSchema = check self.schemaClient->getSchemaById(schemaId);
+            string retrievedSchema = check registry->getSchemaById(schemaId);
             avro:Schema avroClient = check new (retrievedSchema);
             anydata deserializedData = check avroClient.fromAvro(data.slice(5, data.length()));
             return deserializedData;
@@ -71,11 +71,3 @@ public isolated client class Client {
         }
     }
 }
-
-isolated function toBytes(int id) returns byte[]|error = @java:Method {
-    'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
-} external;
-
-isolated function getId(byte[] bytes) returns int = @java:Method {
-    'class: "io.ballerina.lib.confluent.avro.serdes.AvroSerializer"
-} external;

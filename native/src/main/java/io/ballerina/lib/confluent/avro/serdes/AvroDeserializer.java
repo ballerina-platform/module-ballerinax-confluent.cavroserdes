@@ -36,8 +36,9 @@ import static io.ballerina.lib.confluent.avro.serdes.ModuleUtils.getModule;
 /**
  * Provide APIs related to Avro Serialization/Deserialization with the Schema Registry.
  */
-public class AvroSerializer {
+public class AvroDeserializer {
     private static final String DESERIALIZE_FUNCTION = "deserializeData";
+    private static final String DESERIALIZER = "Deserializer";
 
     public static final StrandMetadata EXECUTION_STRAND = new StrandMetadata(
             getModule().getOrg(),
@@ -45,15 +46,15 @@ public class AvroSerializer {
             getModule().getMajorVersion(),
             DESERIALIZE_FUNCTION);
 
-    public static Object deserialize(Environment env, BObject kafkaSerDes, BArray data,
-                                     BTypedesc typeDesc) {
+    public static Object deserialize(Environment env, BObject registry, BArray data, BTypedesc typeDesc) {
+        BObject deserializer = ValueCreator.createObjectValue(getModule(), DESERIALIZER, null, null);
         Future future = env.markAsync();
         ExecutionCallback executionCallback = new ExecutionCallback(future, typeDesc);
-        Object[] arguments = new Object[]{data, true};
+        Object[] arguments = new Object[]{registry, true, data, true};
         UnionType typeUnion = TypeCreator.createUnionType(PredefinedTypes.TYPE_ANYDATA_ARRAY,
                                                           PredefinedTypes.TYPE_ERROR);
         env.getRuntime()
-                .invokeMethodAsyncConcurrently(kafkaSerDes, DESERIALIZE_FUNCTION, null, EXECUTION_STRAND,
+                .invokeMethodAsyncConcurrently(deserializer, DESERIALIZE_FUNCTION, null, EXECUTION_STRAND,
                                                executionCallback, null, typeUnion, arguments);
         return null;
     }

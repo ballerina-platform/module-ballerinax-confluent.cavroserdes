@@ -1,17 +1,39 @@
 [
   {
-    "name": "java.util.concurrent.atomic.AtomicBoolean",
-    "fields": [
+    "name": "io.confluent.kafka.schemaregistry.client.rest.entities.requests.RegisterSchemaRequest",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
       {
-        "name": "value"
+        "name": "getId",
+        "parameterTypes": []
+      },
+      {
+        "name": "getSchema",
+        "parameterTypes": []
+      },
+      {
+        "name": "getVersion",
+        "parameterTypes": []
       }
     ]
   },
   {
-    "name": "java.util.concurrent.atomic.AtomicReference",
-    "fields": [
+    "name": "io.confluent.kafka.schemaregistry.client.rest.entities.requests.RegisterSchemaResponse",
+    "allDeclaredFields": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "methods": [
       {
-        "name": "value"
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "setId",
+        "parameterTypes": [
+          "int"
+        ]
       }
     ]
   }

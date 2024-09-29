@@ -76,6 +76,8 @@ subprojects {
         }
 
         ballerinaStdLibs "io.ballerina.stdlib:io-ballerina:${stdlibIoVersion}"
+        ballerinaStdLibs "io.ballerina.lib:avro-ballerina:${stdlibAvroVersion}"
+        ballerinaStdLibs "io.ballerina.stdlib:http-ballerina:${stdlibHttpVersion}"
     }
 }
 

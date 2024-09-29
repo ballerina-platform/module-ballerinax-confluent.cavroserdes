@@ -50,7 +50,7 @@ public class AvroDeserializer {
         BObject deserializer = ValueCreator.createObjectValue(getModule(), DESERIALIZER, null, null);
         Future future = env.markAsync();
         ExecutionCallback executionCallback = new ExecutionCallback(future, typeDesc);
-        Object[] arguments = new Object[]{registry, true, data, true};
+        Object[] arguments = new Object[]{registry, true, data, true, typeDesc, true};
         UnionType typeUnion = TypeCreator.createUnionType(PredefinedTypes.TYPE_ANYDATA_ARRAY,
                                                           PredefinedTypes.TYPE_ERROR);
         env.getRuntime()

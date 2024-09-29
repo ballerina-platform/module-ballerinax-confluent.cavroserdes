@@ -59,12 +59,12 @@ isolated function getId(byte[] bytes) returns int = @java:Method {
 } external;
 
 class Deserializer {
-    isolated function deserializeData(cregistry:Client registry, byte[] data) returns anydata|Error {
+    isolated function deserializeData(cregistry:Client registry, byte[] data, typedesc<anydata> targetType) returns anydata|Error {
         do {
             int schemaId = getId(data.slice(1, 5));
             string retrievedSchema = check registry->getSchemaById(schemaId);
             avro:Schema avroClient = check new (retrievedSchema);
-            anydata deserializedData = check avroClient.fromAvro(data.slice(5, data.length()));
+            anydata deserializedData = check avroClient.fromAvro(data.slice(5, data.length()), targetType);
             return deserializedData;
         } on fail error e {
             return error Error(DESERIALIZATION_ERROR, e);

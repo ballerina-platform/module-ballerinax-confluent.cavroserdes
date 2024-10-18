@@ -23,7 +23,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "avro"
-version = "1.0.0"
+version = "1.0.2"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]
@@ -248,7 +248,7 @@ dependencies = [
 [[package]]
 org = "ballerina"
 name = "mime"
-version = "2.10.0"
+version = "2.10.1"
 scope = "testOnly"
 dependencies = [
 	{org = "ballerina", name = "io"},
@@ -346,7 +346,7 @@ modules = [
 [[package]]
 org = "ballerinax"
 name = "confluent.cavroserdes"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
 	{org = "ballerina", name = "avro"},
 	{org = "ballerina", name = "http"},

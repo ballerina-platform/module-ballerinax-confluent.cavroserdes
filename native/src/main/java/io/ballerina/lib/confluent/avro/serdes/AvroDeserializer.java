@@ -19,13 +19,12 @@
 package io.ballerina.lib.confluent.avro.serdes;
 
 import io.ballerina.runtime.api.Environment;
-import io.ballerina.runtime.api.Future;
-import io.ballerina.runtime.api.PredefinedTypes;
-import io.ballerina.runtime.api.async.StrandMetadata;
-import io.ballerina.runtime.api.creators.TypeCreator;
 import io.ballerina.runtime.api.creators.ValueCreator;
-import io.ballerina.runtime.api.types.UnionType;
+import io.ballerina.runtime.api.utils.JsonUtils;
+import io.ballerina.runtime.api.utils.StringUtils;
+import io.ballerina.runtime.api.utils.ValueUtils;
 import io.ballerina.runtime.api.values.BArray;
+import io.ballerina.runtime.api.values.BError;
 import io.ballerina.runtime.api.values.BObject;
 import io.ballerina.runtime.api.values.BTypedesc;
 
@@ -40,23 +39,22 @@ public class AvroDeserializer {
     private static final String DESERIALIZE_FUNCTION = "deserializeData";
     private static final String DESERIALIZER = "Deserializer";
 
-    public static final StrandMetadata EXECUTION_STRAND = new StrandMetadata(
-            getModule().getOrg(),
-            getModule().getName(),
-            getModule().getMajorVersion(),
-            DESERIALIZE_FUNCTION);
-
     public static Object deserialize(Environment env, BObject registry, BArray data, BTypedesc typeDesc) {
         BObject deserializer = ValueCreator.createObjectValue(getModule(), DESERIALIZER, null, null);
-        Future future = env.markAsync();
-        ExecutionCallback executionCallback = new ExecutionCallback(future, typeDesc);
-        Object[] arguments = new Object[]{registry, true, data, true, typeDesc, true};
-        UnionType typeUnion = TypeCreator.createUnionType(PredefinedTypes.TYPE_ANYDATA_ARRAY,
-                                                          PredefinedTypes.TYPE_ERROR);
-        env.getRuntime()
-                .invokeMethodAsyncConcurrently(deserializer, DESERIALIZE_FUNCTION, null, EXECUTION_STRAND,
-                                               executionCallback, null, typeUnion, arguments);
-        return null;
+        return env.yieldAndRun(() -> {
+            try {
+                Object[] arguments = new Object[]{registry, data, typeDesc};
+                Object result = env.getRuntime().callMethod(deserializer, DESERIALIZE_FUNCTION, null, arguments);
+                if (result instanceof BError) {
+                    return result;
+                } else {
+                    Object jsonObject = JsonUtils.parse(StringUtils.getJsonString(result));
+                    return ValueUtils.convert(jsonObject, typeDesc.getDescribingType());
+                }
+            } catch (BError bError) {
+                return bError;
+            }
+        });
     }
 
     public static BArray toBytes(int id) {

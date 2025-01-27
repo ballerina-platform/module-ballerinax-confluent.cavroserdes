@@ -1,22 +1,22 @@
 [package]
 org = "ballerinax"
 name = "confluent.cavroserdes"
-version = "0.2.1"
+version = "0.3.0"
 authors = ["Ballerina"]
 export=["confluent.cavroserdes"]
 keywords = ["confluent", "schema_registry", "avro", "serdes"]
 repository = "https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes"
 license = ["Apache-2.0"]
-distribution = "2201.10.0"
+distribution = "2201.11.0-20241117-133400-a3054b77"
 
 [build-options]
 observabilityIncluded = true
 
-[platform.java17]
+[platform.java21]
 graalvmCompatible = true
 
-[[platform.java17.dependency]]
+[[platform.java21.dependency]]
 groupId = "io.ballerina.lib"
 artifactId = "confluent.cavroserdes-native"
-version = "0.2.1"
-path = "../native/build/libs/confluent.cavroserdes-native-0.2.1.jar"
+version = "0.3.0"
+path = "../native/build/libs/confluent.cavroserdes-native-0.3.0.jar"

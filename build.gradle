@@ -78,7 +78,7 @@ subprojects {
         ballerinaStdLibs "io.ballerina.stdlib:io-ballerina:${stdlibIoVersion}"
         ballerinaStdLibs "io.ballerina.lib:avro-ballerina:${stdlibAvroVersion}"
         ballerinaStdLibs "io.ballerina.stdlib:http-ballerina:${stdlibHttpVersion}"
-        ballerinaStdLibs "io.ballerina.lib:confluent.cregistry-ballerina:0.2.1"
+        ballerinaStdLibs "io.ballerina.lib:confluent.cregistry-ballerina:${cRegistryVersion}"
 
     }
 }

@@ -75,6 +75,29 @@ public function testWithRecords() returns error? {
 }
 
 @test:Config {}
+public function testWithRecordsBindingToAnydata() returns error? {
+    string schema = string `
+        {
+            "namespace": "example.avro",
+            "type": "record",
+            "name": "Student",
+            "fields": [
+                {"name": "name", "type": "string"},
+                {"name": "subject", "type": "string"}
+            ]
+        }`;
+
+    Student student = {
+        name: "John",
+        subject: "Math"
+    };
+
+    byte[] bytes = check serialize(regsitry, schema, student, "subject-1");
+    anydata getStudent = check deserialize(regsitry, bytes);
+    test:assertEquals(getStudent.cloneWithType(Student), student);
+}
+
+@test:Config {}
 public function testSerDesWithInteger() returns error? {
     string schema = string `
         {

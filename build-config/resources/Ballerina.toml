@@ -7,7 +7,7 @@ export=["confluent.cavroserdes"]
 keywords = ["confluent", "schema_registry", "avro", "serdes"]
 repository = "https://github.com/ballerina-platform/module-ballerinax-confluent.cavroserdes"
 license = ["Apache-2.0"]
-distribution = "2201.11.0-20241117-133400-a3054b77"
+distribution = "2201.11.0"
 
 [build-options]
 observabilityIncluded = true

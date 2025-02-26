@@ -357,7 +357,7 @@ modules = [
 [[package]]
 org = "ballerinax"
 name = "confluent.cavroserdes"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
 	{org = "ballerina", name = "avro"},
 	{org = "ballerina", name = "http"},
@@ -373,7 +373,7 @@ modules = [
 [[package]]
 org = "ballerinax"
 name = "confluent.cregistry"
-version = "0.3.0"
+version = "0.4.0"
 dependencies = [
 	{org = "ballerina", name = "jballerina.java"}
 ]

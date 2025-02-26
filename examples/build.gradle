@@ -69,7 +69,7 @@ task buildExamples {
 }
 
 task build {
-    dependsOn buildExamples
+    // dependsOn buildExamples
 }
 
 buildExamples.dependsOn ":confluent.cavroserdes-ballerina:build"

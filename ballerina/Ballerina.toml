@@ -19,4 +19,4 @@ graalvmCompatible = true
 groupId = "io.ballerina.lib"
 artifactId = "confluent.cavroserdes-native"
 version = "1.0.2"
-path = "../native/build/libs/confluent.cavroserdes-native-1.0.2-SNAPSHOT.jar"
+path = "../native/build/libs/confluent.cavroserdes-native-1.0.2.jar"

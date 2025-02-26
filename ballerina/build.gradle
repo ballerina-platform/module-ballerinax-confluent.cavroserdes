@@ -19,7 +19,7 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
-    id 'io.ballerina.plugin'
+    id "io.ballerina.plugin" version "${ballerinaGradlePluginVersion}"
 }
 
 description = 'Confluent Avro Serialization - Ballerina'

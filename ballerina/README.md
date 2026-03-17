@@ -2,7 +2,14 @@
 
 [Avro Serializer/Deserializer for Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/fundamentals/serdes-develop/serdes-avro.html) is an Avro serializer/deserializer designed to work with the Confluent Schema Registry. It is designed to not include the message schema in the message payload but instead includes the schema ID.
 
-The Ballerina Avro Serializer/Deserializer for Confluent Schema Registry connector integrates with the Confluent Schema Registry for Avro serialization and deserialization.
+The Confluent Avro SerDes connector integrates with the Confluent Schema Registry for Avro serialization and deserialization.
+
+### Key Features
+
+- Serialize data to Avro format using Confluent Schema Registry
+- Deserialize Avro-encoded data back to structured types
+- Automatic schema ID management via Confluent Schema Registry
+- Seamless integration with Kafka producers and consumers
 
 ## Quickstart
 
